@@ -13,8 +13,8 @@ shinyUI(fluidPage(
                         "whose location in their profile is near ",
                         "the requested location, in addition to tweets ",
                         "geocoded with specific coordinates.")),
-               p(paste0("In the map, red markers show negative tweets,",
-                        "green markers positive tweets,",
+               p(paste0("In the map, red markers show negative tweets," ,
+                        "green markers positive tweets, ",
                         "and grey neutral."))),
         column(4, wellPanel(
             textInput("searchterm", label="Topic", value="#worldcup"),
