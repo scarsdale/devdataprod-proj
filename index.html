@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sentiment Analysis of Tweets</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Sentiment Analysis of Tweets">
+  <meta name="author" content="">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Sentiment Analysis of Tweets</h1>
+    <h2>By Geographic Area and Topic</h2>
+    <p><br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Motivation</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>How are residents in a certain area reacting to an event?</li>
+<li>Disasters (e.g. MH370)</li>
+<li>Local politics</li>
+<li>Wins/losses at sporting events (e.g. World Cup matches)</li>
+<li>Plotting geocoded tweets on a map, classified by sentiment,
+gives one view of this.</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Sentiment Analysis</h2>
+  </hgroup>
+  <article data-timings="">
+    <h5><code>sentiment</code> <a href="https://sites.google.com/site/miningtwitter/questions/sentiment/sentiment">package</a>:</h5>
+
+<ul>
+<li>Two algorithms, emotion clustering and score on a positive-negative continuum</li>
+<li>No longer on CRAN, neither are its dependencies</li>
+</ul>
+
+<h5><code>sentiment140</code> <a href="https://github.com/okugami79/sentiment140">package</a>:</h5>
+
+<ul>
+<li>Three classes: positive, neutral, negative</li>
+<li>Calls external web service <a href="http://www.sentiment140.com/">Sentiment140</a></li>
+<li>Ultimately used this in the application</li>
+</ul>
+
+<pre><code class="r">library(sentiment) # yes, the package name of sentiment140 is just sentiment
+sentiment(&quot;This is a really good package!&quot;)
+</code></pre>
+
+<pre><code>##                             text polarity language
+## 1 This is a really good package! positive       en
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Mapping</h2>
+  </hgroup>
+  <article data-timings="">
+    <h4>Use the <code>ggmap</code> package</h4>
+
+<ul>
+<li><code>geocode()</code>: convert natural language name to lat/long</li>
+</ul>
+
+<pre><code class="r">library(ggmap)
+geocode(&quot;Gary, IN&quot;, output=&quot;latlona&quot;)
+</code></pre>
+
+<pre><code>##      lon   lat       address
+## 1 -87.35 41.59 gary, in, usa
+</code></pre>
+
+<ul>
+<li><code>get_googlemap()</code>: download Google map tile of an area as an image</li>
+<li>Can add markers</li>
+<li><code>ggmap()</code>: Plot a map; compatible with <code>ggplot2</code></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Limitations</h2>
+  </hgroup>
+  <article data-timings="">
+    <h4>Not every tweet carries geo coordinates</h4>
+
+<ul>
+<li>Twitter uses the location stated in a user&#39;s profile as a substitute</li>
+<li>But this is often not possible to geocode (jokes, lack of context, &amp;c)</li>
+</ul>
+
+<h4>Even good sentiment analysis is bad at detecting negation or sarcasm</h4>
+
+<ul>
+<li>Simplistic sentiment analysis is even more problematic</li>
+<li>Quantifying the proportion of such difficult-to-interpret messages
+on Twitter would be interesting</li>
+</ul>
+
+<h3>Despite these limitations, this is a good exploratory method</h3>
+
+<ul>
+<li>Find potential patterns for more rigorous investigation</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Motivation'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Sentiment Analysis'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Mapping'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Limitations'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
